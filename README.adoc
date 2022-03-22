@@ -1,0 +1,58 @@
+= RESTEasy Jakarta RESTful Web Services TCK
+
+This project will run RESTEasy in https://wildfly.org[WildFly] against the
+https://jakarta.ee/specifications/restful-ws/[Jakarta REST] TCK.
+
+You can run SE tests only with the `-Pse-only` Maven profile.
+
+== Executing the TCK with the run-tck.sh Script
+
+The `run-tck.sh` script is used to configure your environment as well as run the TCK. If Maven is not installed the
+script will download and install Maven. It also installs the Jakarta REST TCK artifacts into your local Maven repository.
+You can override the local repository with the `-Dmaven.repo.local` system property.
+
+----
+./bin/run-tck.sh
+----
+
+You can turn on trace logging for the TCK with the `-Dtck.log.trace=true` system property.
+
+----
+./bin/run-tck.sh -Dtck.log.trace=true
+----
+
+To run an individual test you can use the failsafe plugin property `-Dit.test=YourTestIT`.
+
+----
+./bin/run-tck.sh -Dit.test=UriBuilderIT
+----
+
+For advanced script options run `./bin/run-tck.sh -h`.
+
+== Execute tests From the TCK Adapter
+
+You can also execute the tests from the `jakarta-rest-tck` Maven project if you've already installed the artifacts. You
+can either set the `JBOSS_HOME` environment variable or the project will provision a server for you.
+
+----
+mvn clean verify
+----
+
+You can turn on trace logging for the TCK with the `-Dtck.log.trace=true` system property.
+
+----
+mvn clean verify -Dtck.log.trace=true
+----
+
+To run an individual test you can use the failsafe plugin property `-Dit.test=YourTestIT`.
+
+----
+mvn clean verify -Dit.test=UriBuilderIT
+----
+
+To override the RESTEasy version to test with you can pass the `-Dversion.org.jboss.resteasy` system property. To
+override the WildFly version pass the `-Dversion.org.wildfly` system property.
+
+----
+mvn clean verify -Dversion.org.jboss.resteasy=6.1.0-SNAPSHOT -Dversion.org.wildfly=27.0.0.Beta1-SNAPSHOT
+----

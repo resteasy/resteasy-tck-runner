@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ JBoss, Home of Professional Open Source.
+  ~
+  ~ Copyright 2022 Red Hat, Inc., and individual contributors
+  ~ as indicated by the @author tags.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>org.jboss</groupId>
+        <artifactId>jboss-parent</artifactId>
+        <version>39</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>dev.resteasy.tck</groupId>
+    <artifactId>jakarta-rest-tck</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+
+    <properties>
+        <!-- Dependency versions -->
+        <version.jakarta.ws.rs>3.1.0</version.jakarta.ws.rs>
+        <version.org.junit>5.7.0</version.org.junit>
+        <version.org.jboss.arquillian>1.7.0.Alpha10</version.org.jboss.arquillian>
+        <version.org.jboss.resteasy>6.1.0-SNAPSHOT</version.org.jboss.resteasy>
+        <version.org.wildfly>26.0.1.Final</version.org.wildfly>
+        <version.org.wildfly.arquillian>5.0.0.Alpha2</version.org.wildfly.arquillian>
+
+        <!-- Plugin versions -->
+        <version.org.jboss.galleon>4.2.8.Final</version.org.jboss.galleon>
+        <version.org.wildfly.plugin>3.0.0.Beta1</version.org.wildfly.plugin>
+
+        <!-- Galleon -->
+        <galleon.fork.embedded>true</galleon.fork.embedded>
+        <galleon.log.time>true</galleon.log.time>
+        <galleon.offline>false</galleon.offline>
+        <galleon.skip>false</galleon.skip>
+
+        <!-- TCK Settings -->
+        <tck.log.debug>false</tck.log.debug>
+        <jboss.home>${project.build.directory}${file.separator}wildfly</jboss.home>
+        <jdk.module.path>${project.build.directory}${file.separator}jdk-modules</jdk.module.path>
+
+        <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
+        <wildfly.skip>false</wildfly.skip>
+        <debugJvmArgs/>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.junit</groupId>
+                <artifactId>junit-bom</artifactId>
+                <version>${version.org.junit}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+
+        <!-- Test Dependencies -->
+        <dependency>
+            <groupId>jakarta.ws.rs</groupId>
+            <artifactId>jakarta-restful-ws-tck</artifactId>
+            <version>${version.jakarta.ws.rs}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Dependencies required for the TCK itself -->
+        <dependency>
+            <groupId>commons-httpclient</groupId>
+            <artifactId>commons-httpclient</artifactId>
+            <version>3.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-library</artifactId>
+            <version>[2.2, 2.3-A00)</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-core</artifactId>
+            <version>[2.2, 2.3-A00)</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.tools</groupId>
+            <artifactId>sigtest-maven-plugin</artifactId>
+            <version>1.4</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- TODO (jrp) is this required? -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-jdk14</artifactId>
+            <version>1.7.36</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.arquillian.junit5</groupId>
+            <artifactId>arquillian-junit5-container</artifactId>
+            <version>${version.org.jboss.arquillian}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.wildfly.arquillian</groupId>
+            <artifactId>wildfly-arquillian-container-managed</artifactId>
+            <version>${version.org.wildfly.arquillian}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.jboss.logmanager</groupId>
+                    <artifactId>jboss-logmanager</artifactId>
+                </exclusion>
+            </exclusions>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- RESTEasy required dependencies -->
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-core</artifactId>
+            <version>${version.org.jboss.resteasy}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-client</artifactId>
+            <version>${version.org.jboss.resteasy}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-json-binding-provider</artifactId>
+            <version>${version.org.jboss.resteasy}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-jaxb-provider</artifactId>
+            <version>${version.org.jboss.resteasy}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-undertow</artifactId>
+            <version>${version.org.jboss.resteasy}</version>
+            <scope>test</scope>
+            <exclusions>
+                <!-- WildFly Arquillian uses an older version which is required. -->
+                <exclusion>
+                    <groupId>org.jboss.threads</groupId>
+                    <artifactId>jboss-threads</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>arquillian.xml</include>
+                </includes>
+            </testResource>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <excludes>
+                    <exclude>arquillian.xml</exclude>
+                </excludes>
+            </testResource>
+        </testResources>
+        <plugins>
+            <!-- Skip the enforcer here -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.jboss.galleon</groupId>
+                <artifactId>galleon-maven-plugin</artifactId>
+                <version>${version.org.jboss.galleon}</version>
+                <configuration>
+                    <skip>${galleon.skip}</skip>
+                    <install-dir>${jboss.home}</install-dir>
+                    <record-state>false</record-state>
+                    <log-time>${galleon.log.time}</log-time>
+                    <offline>${galleon.offline}</offline>
+                    <plugin-options>
+                        <!--<jboss-maven-dist/> -->
+                        <jboss-fork-embedded>${galleon.fork.embedded}</jboss-fork-embedded>
+                        <jboss-jakarta-transform-artifacts>true</jboss-jakarta-transform-artifacts>
+                    </plugin-options>
+                    <feature-packs>
+                        <feature-pack>
+                            <groupId>org.wildfly</groupId>
+                            <artifactId>wildfly-preview-feature-pack</artifactId>
+                            <version>${version.org.wildfly}</version>
+                            <inherit-configs>false</inherit-configs>
+                            <included-configs>
+                                <config>
+                                    <model>standalone</model>
+                                    <name>standalone-full.xml</name>
+                                </config>
+                                <config>
+                                    <model>standalone</model>
+                                    <name>standalone.xml</name>
+                                </config>
+                            </included-configs>
+                            <excluded-packages>
+                                <name>product.conf</name>
+                                <name>docs.schema</name>
+                                <name>appclient</name>
+                                <name>domain</name>
+                            </excluded-packages>
+                        </feature-pack>
+                        <feature-pack>
+                            <groupId>org.jboss.resteasy</groupId>
+                            <artifactId>galleon-feature-pack</artifactId>
+                            <version>${version.org.jboss.resteasy}</version>
+                            <inherit-configs>false</inherit-configs>
+                        </feature-pack>
+                    </feature-packs>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>server-provisioning</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>provision</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <configuration>
+                    <redirectTestOutputToFile>${maven.test.redirectTestOutputToFile}</redirectTestOutputToFile>
+                    <dependenciesToScan>
+                        <dependency>jakarta.ws.rs:jakarta-restful-ws-tck</dependency>
+                    </dependenciesToScan>
+                    <systemPropertyVariables>
+                        <jboss.home>${jboss.home}</jboss.home>
+                        <cts.harness.debug>${tck.log.debug}</cts.harness.debug>
+                        <junit.log.traceflag>${tck.log.debug}</junit.log.traceflag>
+                        <servlet_adaptor>org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher</servlet_adaptor>
+                        <webServerHost>localhost</webServerHost>
+                        <webServerPort>8080</webServerPort>
+                        <user>resteasy-staff</user>
+                        <password>resteasy-staff.12345</password>
+                        <authuser>resteasy-user</authuser>
+                        <authpassword>resteasy-user.12345</authpassword>
+                        <porting.ts.url.class.1>ee.jakarta.tck.ws.rs.lib.implementation.sun.common.SunRIURL</porting.ts.url.class.1>
+                        <optional.tech.packages.to.ignore>jakarta.xml.bind</optional.tech.packages.to.ignore>
+                        <jimage.dir>${jdk.module.path}</jimage.dir>
+                        <signature.sigTestClasspath>${jboss.home}/modules/system/layers/base/jakarta/ws/rs/api/main/jakarta.ws.rs-api-3.1.0.jar${path.separator}${jboss.home}/modules/system/layers/base/jakarta/xml/bind/api/main/jboss-jaxb-api_2.3_spec-2.0.1.Final-ee9.jar${path.separator}${jdk.module.path}/java.base${path.separator}${jdk.module.path}/java.rmi${path.separator}${jdk.module.path}/java.sql${path.separator}${jdk.module.path}/java.naming</signature.sigTestClasspath>
+                    </systemPropertyVariables>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
+                <version>${version.org.wildfly.plugin}</version>
+                <configuration>
+                    <skip>${wildfly.skip}</skip>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>configure-wildfly</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>execute-commands</goal>
+                        </goals>
+                        <configuration>
+                            <jboss-home>${jboss.home}</jboss-home>
+                            <offline>true</offline>
+                            <scripts>
+                                <script>${project.build.outputDirectory}/configure-wildfly.cli</script>
+                            </scripts>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>skip-provisioning</id>
+            <activation>
+                <property>
+                    <name>env.JBOSS_HOME</name>
+                </property>
+            </activation>
+            <properties>
+                <jboss.home>${env.JBOSS_HOME}</jboss.home>
+                <galleon.skip>true</galleon.skip>
+            </properties>
+        </profile>
+        <profile>
+            <id>se-only</id>
+            <properties>
+                <wildfly.skip>true</wildfly.skip>
+                <galleon.skip>true</galleon.skip>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <configuration>
+                            <includes>
+                                <include>**/SeBootstrapIT</include>
+                            </includes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>debug</id>
+            <activation>
+                <property>
+                    <name>debug</name>
+                </property>
+            </activation>
+            <properties>
+                <debug.port>8787</debug.port>
+                <debugJvmArgs>-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:${debug.port}</debugJvmArgs>
+            </properties>
+        </profile>
+    </profiles>
+
+    <repositories>
+        <!-- Required for provisioning WildFly. Not all dependencies currently exist on Maven Central. This is also
+             useful for when we want to test with versions releases that have not yet been synchronized to Maven Central
+             from JBoss Nexus.
+         -->
+        <repository>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </snapshots>
+            <id>jboss-public-repository-group</id>
+            <name>JBoss Public Repository Group</name>
+            <url>https://repository.jboss.org/nexus/content/groups/public/</url>
+            <layout>default</layout>
+        </repository>
+        <!-- Required for PicketBox, once this is removed from WildFly this can be removed -->
+        <repository>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </snapshots>
+            <id>jboss-enterprise-maven-repository</id>
+            <name>JBoss Enterprise Maven Repository</name>
+            <url>https://maven.repository.redhat.com/ga/</url>
+            <layout>default</layout>
+        </repository>
+        <!-- Temporary repository for staged Jakarta EE 10 dependencies -->
+        <repository>
+            <id>jakarta-staging</id>
+            <name>Jakarta Staging</name>
+            <url>https://jakarta.oss.sonatype.org/content/repositories/staging/</url>
+            <layout>default</layout>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+</project>

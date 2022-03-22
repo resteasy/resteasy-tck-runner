@@ -1,0 +1,24 @@
+# Maven build directory
+target
+
+# Working directory
+work
+
+# Intellij
+*.iml
+*.ipr
+*.iws
+.idea
+
+# Eclipse
+**/.settings
+**/.project
+**/.classpath
+**/.checkstyle
+**/.factorypath
+
+# VS Code
+**/.vscode/
+
+# macOS Files
+.DS_Store
