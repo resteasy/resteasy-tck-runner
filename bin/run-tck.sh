@@ -4,7 +4,13 @@ set -e
 
 fail() {
     echo "$1"
-    printHelp
+    p=true
+    if [ -n "${2}" ]; then
+        p=${2}
+    fi
+    if [ "${p}" == true ]; then
+        printHelp
+    fi
     exit 1
 }
 
@@ -31,15 +37,15 @@ printHelp() {
     echo ""
     echo "Usage: ${0##*/} -Dmaven.repo.local=${HOME}/.m2/custom-repository"
     echo "       ${0##*/} -f wildfly.zip"
-    echo "       ${0##*/} -c -e"
+    echo "       ${0##*/} -c -w /tmp/rest-tck -f wildfly.zip"
 }
 
 pushDir() {
-    pushd "${1}" || fail "Failed to change to directory ${1}."
+    pushd "${1}" || fail "Failed to change to directory ${1}." false
 }
 
 popDir() {
-    popd || fail "Failed to reinstate previous directory."
+    popd || fail "Failed to reinstate previous directory." false
 }
 
 install() {
@@ -76,7 +82,7 @@ downloadMavenMaven() {
         export PATH
         popDir
     fi
-    command -v "mvn" >/dev/null 2>&1 || fail "Failed to install Maven"
+    command -v "mvn" >/dev/null 2>&1 || fail "Failed to install Maven" false
 }
 
 PATH="$(pwd)/bin:${PATH}"
@@ -109,7 +115,7 @@ do
             ;;
         -f|--file)
             if [ ! -f "${2}" ]; then
-                fail "Argument ${2} is not a file"
+                fail "Argument ${2} is not a valid file"
             fi
             file="${2}"
             shift
@@ -143,7 +149,7 @@ if [ ${clean} == true ]; then
         rm -rf "${WORK_DIR}"
     fi
     echo "Cleaning your local Maven repository"
-    find "${localMavenRepo}/jakarta/ws/rs" | grep "${REST_VERSION}" | xargs -I {} rm -rfv "{}"
+    find "${localMavenRepo}/jakarta/ws/rs" | grep "${REST_VERSION}" | grep -v "jbossorg" | xargs -I {} rm -rfv "{}"
 fi
 
 # Skip the rest of the process
@@ -183,7 +189,11 @@ fi
 if [ -n "${JBOSS_HOME}" ] && [ ! -d "${JBOSS_HOME}" ]; then
     fail "${JBOSS_HOME} is not a valid directory."
 else
-    echo "Using ${JBOSS_HOME}"
+    if [ -n "${JBOSS_HOME}" ]; then
+        echo "Using JBOSS_HOME=\"${JBOSS_HOME}\""
+    else
+        echo "A server will be provisioned."
+    fi
 fi
 
 pushDir "${PROJECT_DIR}"
@@ -191,8 +201,10 @@ pushDir "${PROJECT_DIR}"
 install "${args}"
 
 if [ -z "${args}" ]; then
+    echo "Running the Jakarta REST TCK"
     mvn clean verify
 else
+    echo "Running the Jakarta REST TCK with arguments: ${args}"
     # shellcheck disable=SC2086
     mvn clean verify ${args}
 fi
