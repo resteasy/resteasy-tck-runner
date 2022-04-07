@@ -89,7 +89,7 @@ PATH="$(pwd)/bin:${PATH}"
 export PATH
 
 if [ -z "${TCK_URL}" ]; then
-    TCK_URL="http://download.eclipse.org/ee4j/jakartaee-tck/jakartaee10/staged/eftl/jakarta-restful-ws-tck-3.1.0.zip"
+    TCK_URL="https://download.eclipse.org/jakartaee/restful-ws/3.1/jakarta-restful-ws-tck-3.1.0.zip"
 fi
 
 WORK_DIR="$(readlink -m ./work)"
