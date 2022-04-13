@@ -82,6 +82,12 @@
             <artifactId>jakarta-restful-ws-tck</artifactId>
             <version>${version.jakarta.ws.rs.tck}</version>
             <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>jakarta.ws.rs</groupId>
