@@ -88,16 +88,17 @@ downloadMavenMaven() {
 PATH="$(pwd)/bin:${PATH}"
 export PATH
 
-if [ -z "${TCK_URL}" ]; then
-    TCK_URL="https://download.eclipse.org/jakartaee/restful-ws/3.1/jakarta-restful-ws-tck-3.1.0.zip"
-fi
-
 WORK_DIR="$(readlink -m ./work)"
 PROJECT_DIR="$(readlink -m ./resteasy-tck-adapter)"
 
 if [ -z "${REST_VERSION}" ]; then
     REST_VERSION="3.1.0"
 fi
+
+if [ -z "${TCK_URL}" ]; then
+    TCK_URL="https://download.eclipse.org/jakartaee/restful-ws/3.1/jakarta-restful-ws-tck-${REST_VERSION}.zip"
+fi
+
 if [ -z "${ARTIFACT_PREFIX}" ]; then
     ARTIFACT_PREFIX="jakarta-restful-ws-tck-"
 fi
@@ -149,7 +150,7 @@ if [ ${clean} == true ]; then
         rm -rf "${WORK_DIR}"
     fi
     echo "Cleaning your local Maven repository"
-    find "${localMavenRepo}/jakarta/ws/rs" | grep "${REST_VERSION}" | grep -v "jbossorg" | xargs -I {} rm -rfv "{}"
+    find "${localMavenRepo}/jakarta/ws/rs/jakarta-restful-ws-tck" | grep "${REST_VERSION}" | xargs -I {} rm -rfv "{}"
 fi
 
 # Skip the rest of the process
@@ -167,10 +168,10 @@ pushDir "${WORK_DIR}"
 downloadMavenMaven
 
 # Download the TCK if necessary
-if [ ! -f "${WORK_DIR}/jakarta-restful-ws-tck-3.1.0.zip" ]; then
+if [ ! -f "${WORK_DIR}/jakarta-restful-ws-tck-${REST_VERSION}.zip" ]; then
     echo "Downloading the Jakarta RESTful Web Services TCK"
     curl -LO "${TCK_URL}"
-    unzip -o -q "${WORK_DIR}/jakarta-restful-ws-tck-3.1.0.zip"
+    unzip -o -q "${WORK_DIR}/jakarta-restful-ws-tck-${REST_VERSION}.zip"
 fi
 popDir
 
