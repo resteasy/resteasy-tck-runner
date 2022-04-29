@@ -22,29 +22,25 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <groupId>org.jboss</groupId>
-        <artifactId>jboss-parent</artifactId>
-        <version>39</version>
+        <groupId>dev.resteasy.tck</groupId>
+        <artifactId>resteasy-tck-runner-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>dev.resteasy.tck</groupId>
-    <artifactId>jakarta-rest-tck</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <artifactId>resteasy-tck-runner</artifactId>
+    <description>
+        Runs the Jakarta RESTful Web Services TCK. If the JBOSS_HOME environment variable is not defined a server will
+        be provisioned.
+    </description>
 
     <properties>
         <!-- Dependency versions -->
-        <version.jakarta.ws.rs>3.1.0</version.jakarta.ws.rs>
-        <version.jakarta.ws.rs.tck>${version.jakarta.ws.rs}</version.jakarta.ws.rs.tck>
         <version.org.junit>5.7.0</version.org.junit>
         <version.org.jboss.arquillian>1.7.0.Alpha10</version.org.jboss.arquillian>
         <version.org.jboss.resteasy>6.1.0.Beta2</version.org.jboss.resteasy>
         <version.org.wildfly>26.1.0.Final</version.org.wildfly>
         <version.org.wildfly.arquillian>5.0.0.Alpha2</version.org.wildfly.arquillian>
-
-        <!-- Plugin versions -->
-        <version.org.jboss.galleon>4.2.8.Final</version.org.jboss.galleon>
-        <version.org.wildfly.plugin>3.0.0.Final</version.org.wildfly.plugin>
 
         <!-- Galleon -->
         <galleon.fork.embedded>true</galleon.fork.embedded>
