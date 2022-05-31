@@ -52,7 +52,6 @@
         <tck.log.debug>false</tck.log.debug>
         <jboss.home>${project.build.directory}${file.separator}wildfly</jboss.home>
         <jdk.module.path>${project.build.directory}${file.separator}jdk-modules</jdk.module.path>
-        <signature.sigTestClasspath>${jboss.home}/modules/system/layers/base/jakarta/ws/rs/api/main/jakarta.ws.rs-api-${version.jakarta.ws.rs}.jar${path.separator}${jboss.home}/modules/system/layers/base/jakarta/xml/bind/api/main/jakarta.xml.bind-api-3.0.1-ee9.jar${path.separator}${jdk.module.path}/java.base${path.separator}${jdk.module.path}/java.rmi${path.separator}${jdk.module.path}/java.sql${path.separator}${jdk.module.path}/java.naming</signature.sigTestClasspath>
 
         <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
         <wildfly.skip>false</wildfly.skip>
@@ -273,6 +272,33 @@
                 </executions>
             </plugin>
             <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>pre-integration-test</phase>
+                        <configuration>
+                            <!-- Export the properties defined below so they can be used for the signature tests -->
+                            <exportAntProperties>true</exportAntProperties>
+                            <target>
+                                <fileset id="rest-jar" dir="${jboss.home}${file.separator}modules/system/layers/base/jakarta/ws/rs/api/main/">
+                                    <include name="**/jakarta.ws.rs-api*.jar"/>
+                                </fileset>
+                                <pathconvert pathsep="${path.separator}"
+                                             property="jakarta.rest.jar" refid="rest-jar"/>
+                                <fileset id="xml-bind-jar" dir="${jboss.home}${file.separator}modules/system/layers/base/jakarta/xml/bind/api/main/">
+                                    <include name="**/*.jar"/>
+                                </fileset>
+                                <pathconvert pathsep="${path.separator}"
+                                             property="jakarta.xml.bind.jar" refid="xml-bind-jar"/>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <configuration>
                     <redirectTestOutputToFile>${maven.test.redirectTestOutputToFile}</redirectTestOutputToFile>
@@ -293,7 +319,8 @@
                         <porting.ts.url.class.1>ee.jakarta.tck.ws.rs.lib.implementation.sun.common.SunRIURL</porting.ts.url.class.1>
                         <optional.tech.packages.to.ignore>jakarta.xml.bind</optional.tech.packages.to.ignore>
                         <jimage.dir>${jdk.module.path}</jimage.dir>
-                        <signature.sigTestClasspath>${signature.sigTestClasspath}</signature.sigTestClasspath>
+                        <!-- These properties are set by the ant task defined above -->
+                        <signature.sigTestClasspath>${jakarta.rest.jar}${path.separator}${jakarta.xml.bind.jar}${path.separator}${jdk.module.path}/java.base${path.separator}${jdk.module.path}/java.rmi${path.separator}${jdk.module.path}/java.sql${path.separator}${jdk.module.path}/java.naming</signature.sigTestClasspath>
                     </systemPropertyVariables>
                 </configuration>
                 <executions>
