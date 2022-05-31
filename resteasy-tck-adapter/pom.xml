@@ -52,6 +52,7 @@
         <tck.log.debug>false</tck.log.debug>
         <jboss.home>${project.build.directory}${file.separator}wildfly</jboss.home>
         <jdk.module.path>${project.build.directory}${file.separator}jdk-modules</jdk.module.path>
+        <signature.sigTestClasspath>${jboss.home}/modules/system/layers/base/jakarta/ws/rs/api/main/jakarta.ws.rs-api-${version.jakarta.ws.rs}.jar${path.separator}${jboss.home}/modules/system/layers/base/jakarta/xml/bind/api/main/jakarta.xml.bind-api-3.0.1-ee9.jar${path.separator}${jdk.module.path}/java.base${path.separator}${jdk.module.path}/java.rmi${path.separator}${jdk.module.path}/java.sql${path.separator}${jdk.module.path}/java.naming</signature.sigTestClasspath>
 
         <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
         <wildfly.skip>false</wildfly.skip>
@@ -292,7 +293,7 @@
                         <porting.ts.url.class.1>ee.jakarta.tck.ws.rs.lib.implementation.sun.common.SunRIURL</porting.ts.url.class.1>
                         <optional.tech.packages.to.ignore>jakarta.xml.bind</optional.tech.packages.to.ignore>
                         <jimage.dir>${jdk.module.path}</jimage.dir>
-                        <signature.sigTestClasspath>${jboss.home}/modules/system/layers/base/jakarta/ws/rs/api/main/jakarta.ws.rs-api-${version.jakarta.ws.rs}.jar${path.separator}${jboss.home}/modules/system/layers/base/jakarta/xml/bind/api/main/jboss-jaxb-api_2.3_spec-2.0.1.Final-ee9.jar${path.separator}${jdk.module.path}/java.base${path.separator}${jdk.module.path}/java.rmi${path.separator}${jdk.module.path}/java.sql${path.separator}${jdk.module.path}/java.naming</signature.sigTestClasspath>
+                        <signature.sigTestClasspath>${signature.sigTestClasspath}</signature.sigTestClasspath>
                     </systemPropertyVariables>
                 </configuration>
                 <executions>
