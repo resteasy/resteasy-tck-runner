@@ -39,7 +39,7 @@
         <version.org.junit>5.7.0</version.org.junit>
         <version.org.jboss.arquillian>1.7.0.Alpha10</version.org.jboss.arquillian>
         <version.org.jboss.resteasy>6.1.0.Beta2</version.org.jboss.resteasy>
-        <version.org.wildfly>27.0.0.Alpha1</version.org.wildfly>
+        <version.org.wildfly>27.0.0.Alpha2</version.org.wildfly>
         <version.org.wildfly.arquillian>5.0.0.Alpha2</version.org.wildfly.arquillian>
 
         <!-- Galleon -->
@@ -226,7 +226,6 @@
                     <log-time>${galleon.log.time}</log-time>
                     <offline>${galleon.offline}</offline>
                     <plugin-options>
-                        <!--<jboss-maven-dist/> -->
                         <jboss-fork-embedded>${galleon.fork.embedded}</jboss-fork-embedded>
                         <jboss-jakarta-transform-artifacts>true</jboss-jakarta-transform-artifacts>
                     </plugin-options>
