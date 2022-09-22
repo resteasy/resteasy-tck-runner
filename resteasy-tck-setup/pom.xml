@@ -15,7 +15,7 @@
     </description>
     <properties>
         <tck.url>https://download.eclipse.org/jakartaee/restful-ws/3.1/jakarta-restful-ws-tck-${version.jakarta.ws.rs.tck}.zip</tck.url>
-        <tck.sha256>2ff33625931c5df8631a016bd25daabed9b27c81d72b7d2bfe6cab21b121cf1b</tck.sha256>
+        <tck.sha256>d854850faf1ab09279f515fef052de5e57afbc591e72d071337e08f0edf41d25</tck.sha256>
         <tck.artifact.prefix>jakarta-restful-ws-tck-${version.jakarta.ws.rs.tck}</tck.artifact.prefix>
         <tck.artifact.directory>${project.build.directory}/jakarta-rest-tck</tck.artifact.directory>
     </properties>
