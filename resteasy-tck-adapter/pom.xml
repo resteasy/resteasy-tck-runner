@@ -36,11 +36,11 @@
 
     <properties>
         <!-- Dependency versions -->
-        <version.org.junit>5.9.0</version.org.junit>
-        <version.org.jboss.arquillian>1.7.0.Alpha12</version.org.jboss.arquillian>
-        <version.org.jboss.resteasy>6.2.1.Final</version.org.jboss.resteasy>
-        <version.org.wildfly>27.0.0.Final</version.org.wildfly>
-        <version.org.wildfly.arquillian>5.0.0.Alpha5</version.org.wildfly.arquillian>
+        <version.org.junit>5.9.2</version.org.junit>
+        <version.org.jboss.arquillian>1.7.0.Alpha14</version.org.jboss.arquillian>
+        <version.org.jboss.resteasy>6.2.2.Final</version.org.jboss.resteasy>
+        <version.org.wildfly>27.0.1.Final</version.org.wildfly>
+        <version.org.wildfly.arquillian>5.0.0.Alpha6</version.org.wildfly.arquillian>
 
         <!-- Galleon -->
         <galleon.fork.embedded>true</galleon.fork.embedded>
@@ -115,14 +115,6 @@
             <groupId>org.netbeans.tools</groupId>
             <artifactId>sigtest-maven-plugin</artifactId>
             <version>1.4</version>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- TODO (jrp) is this required? -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-jdk14</artifactId>
-            <version>1.7.36</version>
             <scope>test</scope>
         </dependency>
 
