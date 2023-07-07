@@ -40,7 +40,7 @@
         <version.org.jboss.arquillian>1.7.0.Final</version.org.jboss.arquillian>
         <version.org.jboss.resteasy>6.2.4.Final</version.org.jboss.resteasy>
         <version.org.wildfly>27.0.1.Final</version.org.wildfly>
-        <version.org.wildfly.arquillian>5.0.0.Alpha6</version.org.wildfly.arquillian>
+        <version.org.wildfly.arquillian>5.0.1.Final</version.org.wildfly.arquillian>
 
         <!-- Galleon -->
         <galleon.fork.embedded>true</galleon.fork.embedded>
