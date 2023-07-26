@@ -40,7 +40,7 @@
 
         <!-- Plugin versions -->
         <version.org.jboss.galleon>5.2.0.Final</version.org.jboss.galleon>
-        <version.org.wildfly.plugin>4.1.1.Final</version.org.wildfly.plugin>
+        <version.org.wildfly.plugin>4.2.0.Final</version.org.wildfly.plugin>
 
         <maven.repo.local>${settings.localRepository}</maven.repo.local>
     </properties>
