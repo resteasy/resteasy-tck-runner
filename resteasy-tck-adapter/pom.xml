@@ -297,6 +297,7 @@
                     </dependenciesToScan>
                     <systemPropertyVariables>
                         <jboss.home>${jboss.home}</jboss.home>
+                        <dev.resteasy.sse.closed.response.code>200</dev.resteasy.sse.closed.response.code>
                         <cts.harness.debug>${tck.log.debug}</cts.harness.debug>
                         <junit.log.traceflag>${tck.log.debug}</junit.log.traceflag>
                         <servlet_adaptor>org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher</servlet_adaptor>
