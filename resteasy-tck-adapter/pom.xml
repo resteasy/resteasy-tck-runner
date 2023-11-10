@@ -45,8 +45,6 @@
         <!-- Galleon -->
         <galleon.fork.embedded>true</galleon.fork.embedded>
         <galleon.log.time>true</galleon.log.time>
-        <galleon.offline>false</galleon.offline>
-        <galleon.skip>false</galleon.skip>
 
         <!-- TCK Settings -->
         <tck.log.debug>false</tck.log.debug>
@@ -54,7 +52,8 @@
         <jdk.module.path>${project.build.directory}${file.separator}jdk-modules</jdk.module.path>
 
         <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
-        <wildfly.skip>false</wildfly.skip>
+        <skip.provisioning>false</skip.provisioning>
+        <skip.container.config>false</skip.container.config>
         <debugJvmArgs/>
     </properties>
 
@@ -188,56 +187,68 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.jboss.galleon</groupId>
-                <artifactId>galleon-maven-plugin</artifactId>
-                <version>${version.org.jboss.galleon}</version>
-                <configuration>
-                    <skip>${galleon.skip}</skip>
-                    <install-dir>${jboss.home}</install-dir>
-                    <record-state>false</record-state>
-                    <log-time>${galleon.log.time}</log-time>
-                    <offline>${galleon.offline}</offline>
-                    <plugin-options>
-                        <jboss-fork-embedded>${galleon.fork.embedded}</jboss-fork-embedded>
-                    </plugin-options>
-                    <feature-packs>
-                        <feature-pack>
-                            <groupId>org.wildfly</groupId>
-                            <artifactId>wildfly-ee-galleon-pack</artifactId>
-                            <version>${version.org.wildfly}</version>
-                            <inherit-configs>false</inherit-configs>
-                            <included-configs>
-                                <config>
-                                    <model>standalone</model>
-                                    <name>standalone-full.xml</name>
-                                </config>
-                                <config>
-                                    <model>standalone</model>
-                                    <name>standalone.xml</name>
-                                </config>
-                            </included-configs>
-                            <excluded-packages>
-                                <name>product.conf</name>
-                                <name>docs.schema</name>
-                                <name>appclient</name>
-                                <name>domain</name>
-                            </excluded-packages>
-                        </feature-pack>
-                        <feature-pack>
-                            <groupId>org.jboss.resteasy</groupId>
-                            <artifactId>galleon-feature-pack</artifactId>
-                            <version>${version.org.jboss.resteasy}</version>
-                            <inherit-configs>false</inherit-configs>
-                        </feature-pack>
-                    </feature-packs>
-                </configuration>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
+                <version>${version.org.wildfly.plugin}</version>
                 <executions>
                     <execution>
                         <id>server-provisioning</id>
-                        <phase>pre-integration-test</phase>
+                        <phase>generate-test-resources</phase>
                         <goals>
                             <goal>provision</goal>
                         </goals>
+                        <configuration>
+                            <skip>${skip.provisioning}</skip>
+                            <provisioning-dir>${jboss.home}</provisioning-dir>
+                            <galleon-options>
+                                <jboss-fork-embedded>${galleon.fork.embedded}</jboss-fork-embedded>
+                            </galleon-options>
+                            <feature-packs>
+                                <feature-pack>
+                                    <groupId>org.wildfly</groupId>
+                                    <artifactId>wildfly-ee-galleon-pack</artifactId>
+                                    <version>${version.org.wildfly}</version>
+                                    <inherit-configs>false</inherit-configs>
+                                    <included-configs>
+                                        <config>
+                                            <model>standalone</model>
+                                            <name>standalone-full.xml</name>
+                                        </config>
+                                        <config>
+                                            <model>standalone</model>
+                                            <name>standalone.xml</name>
+                                        </config>
+                                    </included-configs>
+                                    <excluded-packages>
+                                        <name>product.conf</name>
+                                        <name>docs.schema</name>
+                                        <name>appclient</name>
+                                        <name>domain</name>
+                                    </excluded-packages>
+                                </feature-pack>
+                                <feature-pack>
+                                    <groupId>org.jboss.resteasy</groupId>
+                                    <artifactId>galleon-feature-pack</artifactId>
+                                    <version>${version.org.jboss.resteasy}</version>
+                                    <inherit-configs>false</inherit-configs>
+                                </feature-pack>
+                            </feature-packs>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>configure-wildfly</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>execute-commands</goal>
+                        </goals>
+                        <configuration>
+                            <skip>${skip.container.config}</skip>
+                            <jboss-home>${jboss.home}</jboss-home>
+                            <offline>true</offline>
+                            <scripts>
+                                <script>${project.build.outputDirectory}/configure-wildfly.cli</script>
+                            </scripts>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
@@ -302,6 +313,21 @@
                             <goal>run</goal>
                         </goals>
                     </execution>
+                    <execution>
+                        <id>enable-yaml-configuration</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <mkdir dir="${jboss.home}/modules/system/layers/base/org/jboss/as/controller/main/dir/META-INF/services/"/>
+                                <copy verbose="true" todir="${jboss.home}/modules/system/layers/base/org/jboss/as/controller/main/dir/META-INF/services/">
+                                    <fileset dir="${project.build.testOutputDirectory}" includes="org.jboss.as.controller.persistence.ConfigurationExtension" />
+                                </copy>
+                            </target>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
             <plugin>
@@ -339,30 +365,6 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.wildfly.plugins</groupId>
-                <artifactId>wildfly-maven-plugin</artifactId>
-                <version>${version.org.wildfly.plugin}</version>
-                <configuration>
-                    <skip>${wildfly.skip}</skip>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>configure-wildfly</id>
-                        <phase>pre-integration-test</phase>
-                        <goals>
-                            <goal>execute-commands</goal>
-                        </goals>
-                        <configuration>
-                            <jboss-home>${jboss.home}</jboss-home>
-                            <offline>true</offline>
-                            <scripts>
-                                <script>${project.build.outputDirectory}/configure-wildfly.cli</script>
-                            </scripts>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
     </build>
 
@@ -376,27 +378,8 @@
             </activation>
             <properties>
                 <jboss.home>${env.JBOSS_HOME}</jboss.home>
-                <galleon.skip>true</galleon.skip>
+                <skip.provisioning>true</skip.provisioning>
             </properties>
-        </profile>
-        <profile>
-            <id>se-only</id>
-            <properties>
-                <wildfly.skip>true</wildfly.skip>
-                <galleon.skip>true</galleon.skip>
-            </properties>
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-failsafe-plugin</artifactId>
-                        <configuration>
-                            <includes>
-                                <include>**/SeBootstrapIT</include>
-                            </includes>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
         </profile>
 
         <profile>
