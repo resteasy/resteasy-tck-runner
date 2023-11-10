@@ -35,7 +35,6 @@
 
     <properties>
         <!-- Dependency versions -->
-        <version.jakarta.ws.rs>3.1.0</version.jakarta.ws.rs>
         <version.jakarta.ws.rs.tck>3.1.4</version.jakarta.ws.rs.tck>
 
         <!-- Plugin versions -->
