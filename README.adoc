@@ -33,3 +33,10 @@ override the WildFly version pass the `-Dversion.org.wildfly` system property.
 ----
 mvn clean verify -Dversion.org.jboss.resteasy=6.1.0-SNAPSHOT -Dversion.org.wildfly=27.0.0.Beta1-SNAPSHOT
 ----
+
+By default the client API's used for testing are the ones provided in the container. However, this can be overridden
+by passing the `version.org.jboss.resteasy.client` system property.
+
+----
+mvn clean verify -Dversion.org.jboss.resteasy.client=6.2.0.Final
+----
