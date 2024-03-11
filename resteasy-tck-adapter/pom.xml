@@ -39,7 +39,7 @@
         <version.org.junit>5.10.2</version.org.junit>
         <version.org.jboss.arquillian>1.7.1.Final</version.org.jboss.arquillian>
         <version.org.jboss.resteasy>6.2.7.Final</version.org.jboss.resteasy>
-        <version.org.wildfly>30.0.0.Final</version.org.wildfly>
+        <version.org.wildfly>31.0.1.Final</version.org.wildfly>
         <version.org.wildfly.arquillian>5.0.1.Final</version.org.wildfly.arquillian>
 
         <!-- Galleon -->
@@ -105,9 +105,9 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.netbeans.tools</groupId>
+            <groupId>jakarta.tck</groupId>
             <artifactId>sigtest-maven-plugin</artifactId>
-            <version>1.7</version>
+            <version>2.2</version>
             <scope>test</scope>
         </dependency>
 
@@ -132,6 +132,13 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- Used for logging in tests -->
+        <dependency>
+            <groupId>org.jboss.logmanager</groupId>
+            <artifactId>jboss-logmanager</artifactId>
+            <version>3.0.3.Final</version>
             <scope>test</scope>
         </dependency>
         <!-- SeBootstrap TCK dependencies -->
@@ -261,16 +268,18 @@
                             <!-- Export the properties defined below so they can be used for the signature tests -->
                             <exportAntProperties>true</exportAntProperties>
                             <target>
-                                <fileset id="rest-jar" dir="${jboss.home}${file.separator}modules/system/layers/base/jakarta/ws/rs/api/main/">
+                                <!-- Signature test class path setup -->
+                                <fileset id="sigtest-libs" dir="${jboss.home}${file.separator}modules/system/layers/base/jakarta/">
                                     <include name="**/jakarta.ws.rs-api*.jar"/>
+                                    <include name="**/jakarta.enterprise.cdi-api*.jar"/>
+                                    <include name="**/jakarta.enterprise.lang-model*.jar"/>
+                                    <include name="**/jakarta.inject-api*.jar"/>
+                                    <include name="**/jakarta.xml.bind-api*.jar"/>
                                 </fileset>
                                 <pathconvert pathsep="${path.separator}"
-                                             property="jakarta.rest.jar" refid="rest-jar"/>
-                                <fileset id="xml-bind-jar" dir="${jboss.home}${file.separator}modules/system/layers/base/jakarta/xml/bind/api/main/">
-                                    <include name="**/*.jar"/>
-                                </fileset>
-                                <pathconvert pathsep="${path.separator}"
-                                             property="jakarta.xml.bind.jar" refid="xml-bind-jar"/>
+                                             property="sigtest.classpath" refid="sigtest-libs"/>
+
+                                <!-- Client side API dependencies -->
                                 <fileset id="jakarta-api-jars"
                                          dir="${jboss.home}${file.separator}modules/system/layers/base/jakarta/">
                                     <include name="**/activation/api/main/*.jar"/>
@@ -285,6 +294,7 @@
                                     <include name="**/xml/bind/api/main/*.jar"/>
                                 </fileset>
                                 <pathconvert pathsep="," property="jakarta.api.jars" refid="jakarta-api-jars"/>
+                                <!-- Client side implementation dependencies -->
                                 <fileset id="impl-jars"
                                          dir="${jboss.home}${file.separator}modules/system/layers/base/org/">
                                     <!-- JSON -->
@@ -338,6 +348,7 @@
                         <dependency>jakarta.ws.rs:jakarta-restful-ws-tck</dependency>
                     </dependenciesToScan>
                     <systemPropertyVariables>
+                        <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
                         <jboss.home>${jboss.home}</jboss.home>
                         <dev.resteasy.sse.closed.response.code>200</dev.resteasy.sse.closed.response.code>
                         <cts.harness.debug>${tck.log.debug}</cts.harness.debug>
@@ -353,7 +364,7 @@
                         <optional.tech.packages.to.ignore>jakarta.xml.bind</optional.tech.packages.to.ignore>
                         <jimage.dir>${jdk.module.path}</jimage.dir>
                         <!-- These properties are set by the ant task defined above -->
-                        <signature.sigTestClasspath>${jakarta.rest.jar}${path.separator}${jakarta.xml.bind.jar}${path.separator}${jdk.module.path}/java.base${path.separator}${jdk.module.path}/java.rmi${path.separator}${jdk.module.path}/java.sql${path.separator}${jdk.module.path}/java.naming</signature.sigTestClasspath>
+                        <signature.sigTestClasspath>${sigtest.classpath}${path.separator}${jdk.module.path}/java.base${path.separator}${jdk.module.path}/java.rmi${path.separator}${jdk.module.path}/java.sql${path.separator}${jdk.module.path}/java.naming</signature.sigTestClasspath>
                     </systemPropertyVariables>
                 </configuration>
                 <executions>
@@ -495,15 +506,6 @@
             <name>JBoss Public Repository Group</name>
             <url>https://repository.jboss.org/nexus/content/groups/public/</url>
             <layout>default</layout>
-        </repository>
-        <!-- Remove below repo after opensaml 4.2.0 is accessible from maven central repo-->
-        <repository>
-            <id>opensaml-repo</id>
-            <name>opensaml</name>
-            <url>https://build.shibboleth.net/nexus/content/groups/public</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
         </repository>
     </repositories>
 
