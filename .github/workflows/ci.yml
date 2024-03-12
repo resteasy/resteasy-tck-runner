@@ -5,11 +5,20 @@ name: Pull Requests
 
 on:
   push:
-    branches-ignore:
-      - 'dependabot/**'
+    branches:
+      - 'main'
+    paths:
+      - '**/pom.xml'
+      - 'resteasy-tck-adapter/**'
+      - 'resteasy-tck-setup/**'
   pull_request:
     branches:
       - '**'
+    paths:
+      - '.github/workflows/ci.yml'
+      - '**/pom.xml'
+      - 'resteasy-tck-adapter/**'
+      - 'resteasy-tck-setup/**'
 
 # Only run the latest job
 concurrency:
@@ -37,9 +46,7 @@ jobs:
           cache: 'maven'
       - name: Build with Java ${{ matrix.java }} - ${{ matrix.os }}
         run:  |
-          echo "::group::Build Logs"
-          mvn clean install -U -B -fae
-          echo "::endgroup::"
+          mvn -ntp clean install -U -B -fae
       - uses: actions/upload-artifact@v3
         if: failure()
         with:
