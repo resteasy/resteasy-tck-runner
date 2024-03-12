@@ -6,7 +6,7 @@ name: Pull Requests
 on:
   push:
     branches:
-      - 'main'
+      - 'jakarta-rest-3.1'
     paths:
       - '**/pom.xml'
       - 'resteasy-tck-adapter/**'
