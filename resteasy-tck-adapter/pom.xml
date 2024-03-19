@@ -297,14 +297,14 @@
                                     <include name="**/jboss/classfilewriter/main/*.jar"/>
                                     <include name="**/jboss/logging/main/*.jar"/>
                                     <!-- REST Client -->
-                                    <include name="**/jboss/resteasy/resteasy-cdi/main/*.jar"/>
-                                    <include name="**/jboss/resteasy/resteasy-client/main/*.jar"/>
-                                    <include name="**/jboss/resteasy/resteasy-client-api/main/*.jar"/>
-                                    <include name="**/jboss/resteasy/resteasy-core/main/*.jar"/>
-                                    <include name="**/jboss/resteasy/resteasy-core-spi/main/*.jar"/>
-                                    <include name="**/jboss/resteasy/resteasy-jaxb-provider/main/*.jar"/>
-                                    <include name="**/jboss/resteasy/resteasy-json-binding-provider/main/*.jar"/>
-                                    <include name="**/jboss/resteasy/resteasy-multipart-provider/main/*.jar"/>
+                                    <include name="**/jboss/resteasy/resteasy-cdi/main/*${version.org.jboss.resteasy}.jar"/>
+                                    <include name="**/jboss/resteasy/resteasy-client/main/*${version.org.jboss.resteasy}.jar"/>
+                                    <include name="**/jboss/resteasy/resteasy-client-api/main/*${version.org.jboss.resteasy}.jar"/>
+                                    <include name="**/jboss/resteasy/resteasy-core/main/*${version.org.jboss.resteasy}.jar"/>
+                                    <include name="**/jboss/resteasy/resteasy-core-spi/main/*${version.org.jboss.resteasy}.jar"/>
+                                    <include name="**/jboss/resteasy/resteasy-jaxb-provider/main/*${version.org.jboss.resteasy}.jar"/>
+                                    <include name="**/jboss/resteasy/resteasy-json-binding-provider/main/*${version.org.jboss.resteasy}.jar"/>
+                                    <include name="**/jboss/resteasy/resteasy-multipart-provider/main/*${version.org.jboss.resteasy}.jar"/>
                                     <include name="**/apache/commons/io/main/*.jar"/>
                                     <include name="**/apache/httpcomponents/core/main/*.jar"/>
                                     <include name="**/apache/james/mime4j/main/*.jar"/>
