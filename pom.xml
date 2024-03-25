@@ -22,10 +22,10 @@
 
     <properties>
         <!-- Dependency versions -->
-        <version.jakarta.ws.rs.tck>3.1.4</version.jakarta.ws.rs.tck>
+        <version.jakarta.ws.rs.tck>4.0.0</version.jakarta.ws.rs.tck>
 
         <!-- Plugin versions -->
-        <version.org.wildfly.plugin>5.0.0.Beta3</version.org.wildfly.plugin>
+        <version.org.wildfly.plugin>5.0.0.Beta4</version.org.wildfly.plugin>
 
         <maven.repo.local>${settings.localRepository}</maven.repo.local>
     </properties>
@@ -50,5 +50,30 @@
         <module>resteasy-tck-setup</module>
         <module>resteasy-tck-adapter</module>
     </modules>
+
+    <profiles>
+        <!-- Enable only with caution and delete download artifacts when completed -->
+        <profile>
+            <id>jakarta-staging</id>
+            <activation>
+                <property>
+                    <name>jakarta.staging</name>
+                </property>
+            </activation>
+            <repositories>
+                <repository>
+                    <id>jakarta-sonatype-nexus-staging</id>
+                    <name>Jakarta Sonatype Nexus Staging</name>
+                    <url>https://jakarta.oss.sonatype.org/content/repositories/staging/</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </repository>
+            </repositories>
+        </profile>
+    </profiles>
 
 </project>
