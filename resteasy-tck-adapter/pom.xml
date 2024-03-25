@@ -24,7 +24,7 @@
         <!-- Dependency versions -->
         <version.org.junit>5.10.2</version.org.junit>
         <version.org.jboss.arquillian>1.7.1.Final</version.org.jboss.arquillian>
-        <version.org.jboss.resteasy>6.2.7.Final</version.org.jboss.resteasy>
+        <version.org.jboss.resteasy>6.2.8.Final</version.org.jboss.resteasy>
         <version.org.wildfly>31.0.1.Final</version.org.wildfly>
         <version.org.wildfly.arquillian>5.0.1.Final</version.org.wildfly.arquillian>
 
