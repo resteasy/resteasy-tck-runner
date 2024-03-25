@@ -261,11 +261,10 @@
                             <target>
                                 <!-- Signature test class path setup -->
                                 <fileset id="sigtest-libs" dir="${jboss.home}${file.separator}modules/system/layers/base/jakarta/">
-                                    <include name="**/jakarta.ws.rs-api*.jar"/>
+                                    <include name="**/ws/rs/api/main/*${version.jakarta.ws.rs.tck}.jar"/>
                                     <include name="**/jakarta.enterprise.cdi-api*.jar"/>
                                     <include name="**/jakarta.enterprise.lang-model*.jar"/>
                                     <include name="**/jakarta.inject-api*.jar"/>
-                                    <include name="**/jakarta.xml.bind-api*.jar"/>
                                 </fileset>
                                 <pathconvert pathsep="${path.separator}"
                                              property="sigtest.classpath" refid="sigtest-libs"/>
@@ -282,7 +281,7 @@
                                     <include name="**/inject/api/main/*.jar"/>
                                     <include name="**/interceptor/api/main/*.jar"/>
                                     <include name="**/mail/api/main/*.jar"/>
-                                    <include name="**/ws/rs/api/main/*.jar"/>
+                                    <include name="**/ws/rs/api/main/*${version.jakarta.ws.rs.tck}.jar"/>
                                     <include name="**/xml/bind/api/main/*.jar"/>
                                 </fileset>
                                 <pathconvert pathsep="," property="jakarta.api.jars" refid="jakarta-api-jars"/>
@@ -317,6 +316,20 @@
                         <goals>
                             <goal>run</goal>
                         </goals>
+                    </execution>
+                    <execution>
+                        <id>echo</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <echo message="sigtest.classpath=${sigtest.classpath}"/>
+                                <echo message="jakarta.api.jars=${jakarta.api.jars}"/>
+                                <echo message="impl.jars=${impl.jars}"/>
+                            </target>
+                        </configuration>
                     </execution>
                     <execution>
                         <id>enable-yaml-configuration</id>
