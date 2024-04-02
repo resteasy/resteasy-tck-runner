@@ -19,10 +19,11 @@
         Downloads the Jakarta RESTful Web Services TCK and installs the TCK artifacts into the local repository.
     </description>
     <properties>
-        <tck.url>https://download.eclipse.org/jakartaee/restful-ws/3.1/jakarta-restful-ws-tck-${version.jakarta.ws.rs.tck}.zip</tck.url>
-        <tck.sha256>5ec7e36808eca5f3a3b01f5eec018a30183e555071ca19da8055b22809a22c9d</tck.sha256>
+        <tck.url>https://download.eclipse.org/jakartaee/restful-ws/4.0/jakarta-restful-ws-tck-${version.jakarta.ws.rs.tck}.zip</tck.url>
+        <tck.sha256>9494caaf67a3e5524a5ee1d6e4b749782ca1cbc920c6451583b6249e51c4ac18</tck.sha256>
         <tck.artifact.prefix>jakarta-restful-ws-tck-${version.jakarta.ws.rs.tck}</tck.artifact.prefix>
-        <tck.artifact.directory>${project.build.directory}/jakarta-rest-tck</tck.artifact.directory>
+        <tck.download.directory>${project.build.directory}/jakarta-rest-tck</tck.download.directory>
+        <tck.artifact.directory>${project.build.directory}/jakarta-rest-tck/restful-ws-tck/artifacts</tck.artifact.directory>
     </properties>
 
     <build>
@@ -53,7 +54,7 @@
                 <configuration>
                     <url>${tck.url}</url>
                     <unpack>true</unpack>
-                    <outputDirectory>${tck.artifact.directory}</outputDirectory>
+                    <outputDirectory>${tck.download.directory}</outputDirectory>
                     <outputFileName>jakarta-restful-ws-tck-${version.jakarta.ws.rs.tck}.zip</outputFileName>
                     <sha256>${tck.sha256}</sha256>
                 </configuration>
@@ -74,7 +75,6 @@
                             <packaging>jar</packaging>
                             <file>${tck.artifact.directory}/${tck.artifact.prefix}.jar</file>
                             <sources>${tck.artifact.directory}/${tck.artifact.prefix}-sources.jar</sources>
-                            <pomFile>${tck.artifact.directory}/${tck.artifact.prefix}.pom</pomFile>
                             <localRepositoryPath>${maven.repo.local}</localRepositoryPath>
                         </configuration>
                     </execution>
@@ -82,4 +82,32 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <!-- Enable only with caution and delete download artifacts when completed -->
+        <profile>
+            <id>jakarta-staging</id>
+            <activation>
+                <property>
+                    <name>jakarta.staging</name>
+                </property>
+            </activation>
+            <properties>
+                <tck.url>https://download.eclipse.org/ee4j/restful-ws/tck/eftl/jakarta-restful-ws-tck-${version.jakarta.ws.rs.tck}.zip</tck.url>
+            </properties>
+            <repositories>
+                <repository>
+                    <id>jakarta-sonatype-nexus-staging</id>
+                    <name>Jakarta Sonatype Nexus Staging</name>
+                    <url>https://jakarta.oss.sonatype.org/content/repositories/staging/</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </repository>
+            </repositories>
+        </profile>
+    </profiles>
 </project>
