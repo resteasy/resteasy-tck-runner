@@ -82,32 +82,4 @@
             </plugin>
         </plugins>
     </build>
-
-    <profiles>
-        <!-- Enable only with caution and delete download artifacts when completed -->
-        <profile>
-            <id>jakarta-staging</id>
-            <activation>
-                <property>
-                    <name>jakarta.staging</name>
-                </property>
-            </activation>
-            <properties>
-                <tck.url>https://download.eclipse.org/ee4j/restful-ws/tck/eftl/jakarta-restful-ws-tck-${version.jakarta.ws.rs.tck}.zip</tck.url>
-            </properties>
-            <repositories>
-                <repository>
-                    <id>jakarta-sonatype-nexus-staging</id>
-                    <name>Jakarta Sonatype Nexus Staging</name>
-                    <url>https://jakarta.oss.sonatype.org/content/repositories/staging/</url>
-                    <releases>
-                        <enabled>true</enabled>
-                    </releases>
-                    <snapshots>
-                        <enabled>false</enabled>
-                    </snapshots>
-                </repository>
-            </repositories>
-        </profile>
-    </profiles>
 </project>
