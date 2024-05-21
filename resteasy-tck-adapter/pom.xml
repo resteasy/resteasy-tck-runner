@@ -458,7 +458,7 @@
                 <dependency>
                     <groupId>org.jboss.resteasy</groupId>
                     <artifactId>resteasy-cdi</artifactId>
-                    <version>${version.org.jboss.resteasy}</version>
+                    <version>${version.org.jboss.resteasy.client}</version>
                     <scope>test</scope>
                 </dependency>
                 <dependency>
