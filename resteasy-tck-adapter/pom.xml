@@ -24,10 +24,10 @@
         <!-- Dependency versions -->
         <version.jakarta.ws.rs>3.1.0</version.jakarta.ws.rs>
         <version.org.junit>5.10.3</version.org.junit>
-        <version.org.jboss.arquillian>1.7.2.Final</version.org.jboss.arquillian>
+        <version.org.jboss.arquillian>1.9.1.Final</version.org.jboss.arquillian>
         <version.org.jboss.resteasy>6.2.9.Final</version.org.jboss.resteasy>
         <version.org.wildfly/>
-        <version.org.wildfly.arquillian>5.0.1.Final</version.org.wildfly.arquillian>
+        <version.org.wildfly.arquillian>5.1.0.Beta4</version.org.wildfly.arquillian>
 
         <!-- Galleon -->
         <galleon.fork.embedded>true</galleon.fork.embedded>
@@ -62,6 +62,20 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>org.jboss.arquillian</groupId>
+                <artifactId>arquillian-bom</artifactId>
+                <version>${version.org.jboss.arquillian}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.wildfly.arquillian</groupId>
+                <artifactId>wildfly-arquillian-bom</artifactId>
+                <version>${version.org.wildfly.arquillian}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -69,7 +83,6 @@
         <dependency>
             <groupId>org.jboss.arquillian.container</groupId>
             <artifactId>arquillian-container-test-spi</artifactId>
-            <version>${version.org.jboss.arquillian}</version>
         </dependency>
 
         <!-- Test Dependencies -->
@@ -115,13 +128,11 @@
         <dependency>
             <groupId>org.jboss.arquillian.junit5</groupId>
             <artifactId>arquillian-junit5-container</artifactId>
-            <version>${version.org.jboss.arquillian}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.wildfly.arquillian</groupId>
             <artifactId>wildfly-arquillian-container-managed</artifactId>
-            <version>${version.org.wildfly.arquillian}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.jboss.logmanager</groupId>
