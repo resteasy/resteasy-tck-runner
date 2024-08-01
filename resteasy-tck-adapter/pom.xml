@@ -168,6 +168,10 @@
             <version>${version.org.jboss.resteasy}</version>
             <scope>test</scope>
             <exclusions>
+                <exclusion>
+                    <groupId>jakarta.ws.rs</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
                 <!-- WildFly Arquillian uses an older version which is required. -->
                 <exclusion>
                     <groupId>org.jboss.threads</groupId>
@@ -339,7 +343,7 @@
                                     <include name="**/inject/api/main/*.jar"/>
                                     <include name="**/interceptor/api/main/*.jar"/>
                                     <include name="**/mail/api/main/*.jar"/>
-                                    <include name="**/ws/rs/api/main/*${version.jakarta.ws.rs}*.jar"/>
+                                    <include name="**/ws/rs/api/main/*api*.jar"/>
                                     <include name="**/xml/bind/api/main/*.jar"/>
                                 </fileset>
                                 <pathconvert pathsep="," property="jakarta.api.jars" refid="jakarta-api-jars"/>
