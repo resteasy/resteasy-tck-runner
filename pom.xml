@@ -22,7 +22,7 @@
 
     <properties>
         <!-- Dependency versions -->
-        <version.jakarta.ws.rs.tck>3.1.4</version.jakarta.ws.rs.tck>
+        <version.jakarta.ws.rs.tck>4.0.0</version.jakarta.ws.rs.tck>
 
         <!-- Plugin versions -->
         <version.org.wildfly.plugin>5.0.1.Final</version.org.wildfly.plugin>
