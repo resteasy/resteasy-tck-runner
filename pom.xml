@@ -25,7 +25,7 @@
         <version.jakarta.ws.rs.tck>3.1.4</version.jakarta.ws.rs.tck>
 
         <!-- Plugin versions -->
-        <version.org.wildfly.plugin>5.1.0.Beta2</version.org.wildfly.plugin>
+        <version.org.wildfly.plugin>5.1.1.Final</version.org.wildfly.plugin>
 
         <maven.repo.local>${settings.localRepository}</maven.repo.local>
     </properties>
