@@ -24,7 +24,7 @@
         <!-- Dependency versions -->
         <version.jakarta.ws.rs>3.1.0</version.jakarta.ws.rs>
         <version.org.junit>5.11.4</version.org.junit>
-        <version.org.jboss.arquillian>1.9.2.Final</version.org.jboss.arquillian>
+        <version.org.jboss.arquillian>1.9.3.Final</version.org.jboss.arquillian>
         <version.org.jboss.resteasy>6.2.11.Final</version.org.jboss.resteasy>
         <version.org.wildfly/>
         <version.org.wildfly.arquillian>5.1.0.Beta9</version.org.wildfly.arquillian>
