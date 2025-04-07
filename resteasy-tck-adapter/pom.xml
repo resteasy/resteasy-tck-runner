@@ -27,7 +27,7 @@
         <version.org.jboss.arquillian>1.9.3.Final</version.org.jboss.arquillian>
         <version.org.jboss.resteasy>6.2.12.Final</version.org.jboss.resteasy>
         <version.org.wildfly/>
-        <version.org.wildfly.arquillian>5.1.0.Beta10</version.org.wildfly.arquillian>
+        <version.org.wildfly.arquillian>5.1.0.Beta11</version.org.wildfly.arquillian>
 
         <!-- Galleon -->
         <galleon.fork.embedded>true</galleon.fork.embedded>
