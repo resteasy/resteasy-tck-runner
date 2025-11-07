@@ -46,12 +46,12 @@ jobs:
       - name: Build with Java ${{ matrix.java }}
         run:  |
           mvn -ntp clean install -U -B -fae
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         if: failure()
         with:
           name: surefire-reports-${{ matrix.java }}
           path: '**/failsafe-reports/'
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         if: failure()
         with:
           name: server-logs-${{ matrix.java }}
@@ -73,12 +73,12 @@ jobs:
         # Wildfly 34 is the last version to support Java 11
         run:  |
           mvn -ntp clean install -U -B -fae -Dversion.org.wildfly=34.0.1.Final
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         if: failure()
         with:
           name: surefire-reports-11
           path: '**/failsafe-reports/'
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         if: failure()
         with:
           name: server-logs-11
