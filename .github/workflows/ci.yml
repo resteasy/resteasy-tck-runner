@@ -47,12 +47,12 @@ jobs:
       - name: Jakarta REST 4.0 JDK-${{ matrix.java }}
         run:  |
           mvn -ntp clean install -U -B -fae
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         if: failure()
         with:
           name: surefire-reports-${{ matrix.java }}
           path: '**/failsafe-reports/'
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         if: failure()
         with:
           name: server-logs-${{ matrix.java }}
