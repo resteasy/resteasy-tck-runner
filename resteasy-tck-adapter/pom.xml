@@ -25,7 +25,7 @@
         <version.jakarta.ws.rs>3.1.0</version.jakarta.ws.rs>
         <version.org.junit>5.11.4</version.org.junit>
         <version.org.jboss.arquillian>1.9.5.Final</version.org.jboss.arquillian>
-        <version.org.jboss.resteasy>6.2.14.Final</version.org.jboss.resteasy>
+        <version.org.jboss.resteasy>6.2.15.Final</version.org.jboss.resteasy>
         <version.org.wildfly/>
         <version.org.wildfly.arquillian>5.1.0.Final</version.org.wildfly.arquillian>
 
@@ -39,7 +39,7 @@
         <wildfly.channel.manifest.groupId>org.wildfly.channels</wildfly.channel.manifest.groupId>
         <wildfly.channel.manifest.artifactId>wildfly-ee</wildfly.channel.manifest.artifactId>
 
-        <resteasy.channel.manifest.groupId>dev.resteasy.channels</resteasy.channel.manifest.groupId>
+        <resteasy.channel.manifest.groupId>org.jboss.resteasy.channels</resteasy.channel.manifest.groupId>
         <resteasy.channel.manifest.artifactId>resteasy-6.2</resteasy.channel.manifest.artifactId>
 
         <!-- TCK Settings -->
