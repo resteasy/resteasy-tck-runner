@@ -25,7 +25,7 @@
         <version.jakarta.ws.rs>4.0.0</version.jakarta.ws.rs>
         <version.org.junit>6.0.1</version.org.junit>
         <version.org.jboss.arquillian>1.10.0.Final</version.org.jboss.arquillian>
-        <version.org.jboss.resteasy>7.0.0.Final</version.org.jboss.resteasy>
+        <version.org.jboss.resteasy>7.0.1.Final</version.org.jboss.resteasy>
         <version.org.wildfly/>
         <version.org.wildfly.arquillian>5.1.0.Final</version.org.wildfly.arquillian>
 
@@ -47,7 +47,7 @@
         <!-- WildFly Preview is currently targeting Jakarta EE 11 and we should use it by default
         <wildfly.channel.manifest.artifactId>wildfly-ee</wildfly.channel.manifest.artifactId> -->
 
-        <resteasy.channel.manifest.groupId>dev.resteasy.channels</resteasy.channel.manifest.groupId>
+        <resteasy.channel.manifest.groupId>org.jboss.resteasy.channels</resteasy.channel.manifest.groupId>
         <resteasy.channel.manifest.artifactId>resteasy-7.0</resteasy.channel.manifest.artifactId>
 
         <!-- TCK Settings -->
