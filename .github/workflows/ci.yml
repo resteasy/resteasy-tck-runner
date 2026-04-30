@@ -72,7 +72,7 @@ jobs:
       - name: Jakarta REST 3.1 JDK-11
         # Wildfly 34 is the last version to support Java 11
         run:  |
-          mvn -ntp clean install -U -B -fae -Dversion.org.wildfly=34.0.1.Final
+          mvn -ntp clean install -U -B -fae -Dversion.org.wildfly=34.0.1.Final -Dwildfly.channel.manifest.artifactId=wildfly-ee -Dserver.test.feature.pack.artifactId=wildfly-ee-galleon-pack
       - uses: actions/upload-artifact@v5
         if: failure()
         with:
