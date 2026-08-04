@@ -25,7 +25,7 @@
         <jdk.min.version>11</jdk.min.version>
 
         <!-- Dependency versions -->
-        <version.jakarta.ws.rs.tck>3.1.5</version.jakarta.ws.rs.tck>
+        <version.jakarta.ws.rs.tck>4.0.1</version.jakarta.ws.rs.tck>
 
         <!-- Plugin versions -->
         <version.download-maven-plugin>2.1.0</version.download-maven-plugin>
