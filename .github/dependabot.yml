@@ -10,7 +10,7 @@ updates:
     schedule:
       interval: 'daily'
     ignore:
-      - dependency-name: 'jakarta.ws.rs:jakarta.ws.rs-api'
+      - dependency-name: 'jakarta.ws.rs:*'
         update-types: ['version-update:semver-major', 'version-update:semver-minor']
     open-pull-requests-limit: 10
   - package-ecosystem: 'github-actions'
@@ -31,7 +31,7 @@ updates:
     schedule:
       interval: 'daily'
     ignore:
-      - dependency-name: 'jakarta.ws.rs:jakarta.ws.rs-api'
+      - dependency-name: 'jakarta.ws.rs:*'
         update-types: ['version-update:semver-major', 'version-update:semver-minor']
       - dependency-name: 'io.smallrye:jandex'
         update-types: ['version-update:semver-major', 'version-update:semver-minor']
@@ -40,6 +40,8 @@ updates:
       - dependency-name: 'org.jboss.resteasy:*'
         update-types: ['version-update:semver-major', 'version-update:semver-minor']
       - dependency-name: 'org.junit:junit-bom'
+        update-types: ['version-update:semver-major', 'version-update:semver-minor']
+      - dependency-name: 'org.wildfly.plugins:*'
         update-types: ['version-update:semver-major', 'version-update:semver-minor']
     open-pull-requests-limit: 10
   - package-ecosystem: 'github-actions'
