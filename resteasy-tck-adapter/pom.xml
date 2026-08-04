@@ -22,16 +22,20 @@
 
     <properties>
         <!-- Dependency versions -->
+        <version.commons-httpclient>3.1</version.commons-httpclient>
+        <version.io.smallrye>3.6.0</version.io.smallrye>
+        <version.jakarta.tck>2.7</version.jakarta.tck>
         <version.jakarta.ws.rs>4.0.0</version.jakarta.ws.rs>
-        <version.org.junit>6.1.2</version.org.junit>
+        <version.org.hamcrest>[2.2, 2.3-A00)</version.org.hamcrest>
         <version.org.jboss.arquillian>1.10.2.Final</version.org.jboss.arquillian>
+        <version.org.jboss.logmanager>3.2.2.Final</version.org.jboss.logmanager>
         <version.org.jboss.resteasy>7.0.3.Final</version.org.jboss.resteasy>
+        <!-- Temporary workaround until a new version of RESTEasy is released -->
+        <version.org.jboss.weld>6.0.4.Final</version.org.jboss.weld>
+        <version.org.jboss.weld.api>6.0.Final</version.org.jboss.weld.api>
+        <version.org.junit>6.1.2</version.org.junit>
         <version.org.wildfly/>
         <version.org.wildfly.arquillian>5.1.0.Final</version.org.wildfly.arquillian>
-
-        <!-- Temporary workaround until a new version of RESTEasy is relased -->
-        <version.weld.api>6.0.Final</version.weld.api>
-        <version.weld>6.0.4.Final</version.weld>
 
         <!-- Galleon -->
         <galleon.fork.embedded>true</galleon.fork.embedded>
@@ -107,25 +111,25 @@
         <dependency>
             <groupId>commons-httpclient</groupId>
             <artifactId>commons-httpclient</artifactId>
-            <version>3.1</version>
+            <version>${version.commons-httpclient}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-library</artifactId>
-            <version>[2.2, 2.3-A00)</version>
+            <version>${version.org.hamcrest}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-core</artifactId>
-            <version>[2.2, 2.3-A00)</version>
+            <version>${version.org.hamcrest}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>jakarta.tck</groupId>
             <artifactId>sigtest-maven-plugin</artifactId>
-            <version>2.7</version>
+            <version>${version.jakarta.tck}</version>
             <scope>test</scope>
         </dependency>
 
@@ -154,7 +158,7 @@
         <dependency>
             <groupId>org.jboss.logmanager</groupId>
             <artifactId>jboss-logmanager</artifactId>
-            <version>3.2.2.Final</version>
+            <version>${version.org.jboss.logmanager}</version>
             <scope>test</scope>
         </dependency>
         <!-- SeBootstrap TCK dependencies -->
@@ -183,13 +187,13 @@
         <dependency>
             <groupId>io.smallrye</groupId>
             <artifactId>jandex</artifactId>
-            <version>3.6.0</version>
+            <version>${version.io.smallrye}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.jboss.weld</groupId>
             <artifactId>weld-api</artifactId>
-            <version>${version.weld.api}</version>
+            <version>${version.org.jboss.weld.api}</version>
             <exclusions>
                 <exclusion>
                     <groupId>javax.enterprise</groupId>
@@ -200,19 +204,19 @@
         <dependency>
             <groupId>org.jboss.weld</groupId>
             <artifactId>weld-core-impl</artifactId>
-            <version>${version.weld}</version>
+            <version>${version.org.jboss.weld}</version>
         </dependency>
 
         <!-- Temporary workaround until a new version of RESTEasy is released -->
         <dependency>
             <groupId>org.jboss.weld.se</groupId>
             <artifactId>weld-se-core</artifactId>
-            <version>${version.weld}</version>
+            <version>${version.org.jboss.weld}</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.weld.servlet</groupId>
             <artifactId>weld-servlet-core</artifactId>
-            <version>${version.weld}</version>
+            <version>${version.org.jboss.weld}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.jboss.weld.module</groupId>
@@ -250,7 +254,7 @@
             <plugin>
                 <groupId>org.wildfly.plugins</groupId>
                 <artifactId>wildfly-maven-plugin</artifactId>
-                <version>${version.org.wildfly.plugin}</version>
+                <version>${version.wildfly-maven-plugin}</version>
                 <executions>
                     <execution>
                         <id>server-provisioning</id>
@@ -383,8 +387,11 @@
                         </goals>
                         <configuration>
                             <target>
+                                <!--suppress MavenModelInspection -->
                                 <echo message="sigtest.classpath=${sigtest.classpath}"/>
+                                <!--suppress MavenModelInspection -->
                                 <echo message="jakarta.api.jars=${jakarta.api.jars}"/>
+                                <!--suppress MavenModelInspection -->
                                 <echo message="impl.jars=${impl.jars}"/>
                             </target>
                         </configuration>
@@ -430,6 +437,7 @@
                         <optional.tech.packages.to.ignore>jakarta.xml.bind</optional.tech.packages.to.ignore>
                         <jimage.dir>${jdk.module.path}</jimage.dir>
                         <!-- These properties are set by the ant task defined above -->
+                        <!--suppress MavenModelInspection -->
                         <signature.sigTestClasspath>${sigtest.classpath}${path.separator}${jdk.module.path}/java.base${path.separator}${jdk.module.path}/java.rmi${path.separator}${jdk.module.path}/java.sql${path.separator}${jdk.module.path}/java.naming</signature.sigTestClasspath>
                     </systemPropertyVariables>
                 </configuration>
@@ -472,7 +480,9 @@
                         <artifactId>maven-failsafe-plugin</artifactId>
                         <configuration>
                             <additionalClasspathElements>
+                                <!--suppress MavenModelInspection -->
                                 <additionalClasspathElement>${impl.jars}</additionalClasspathElement>
+                                <!--suppress MavenModelInspection -->
                                 <additionalClasspathElement>${jakarta.api.jars}</additionalClasspathElement>
                             </additionalClasspathElements>
                             <classpathDependencyExcludes>
@@ -507,36 +517,42 @@
                 <dependency>
                     <groupId>org.jboss.resteasy</groupId>
                     <artifactId>resteasy-cdi</artifactId>
+                    <!--suppress MavenModelInspection -->
                     <version>${version.org.jboss.resteasy.client}</version>
                     <scope>test</scope>
                 </dependency>
                 <dependency>
                     <groupId>org.jboss.resteasy</groupId>
                     <artifactId>resteasy-core</artifactId>
+                    <!--suppress MavenModelInspection -->
                     <version>${version.org.jboss.resteasy.client}</version>
                     <scope>test</scope>
                 </dependency>
                 <dependency>
                     <groupId>org.jboss.resteasy</groupId>
                     <artifactId>resteasy-client</artifactId>
+                    <!--suppress MavenModelInspection -->
                     <version>${version.org.jboss.resteasy.client}</version>
                     <scope>test</scope>
                 </dependency>
                 <dependency>
                     <groupId>org.jboss.resteasy</groupId>
                     <artifactId>resteasy-json-binding-provider</artifactId>
+                    <!--suppress MavenModelInspection -->
                     <version>${version.org.jboss.resteasy.client}</version>
                     <scope>test</scope>
                 </dependency>
                 <dependency>
                     <groupId>org.jboss.resteasy</groupId>
                     <artifactId>resteasy-jaxb-provider</artifactId>
+                    <!--suppress MavenModelInspection -->
                     <version>${version.org.jboss.resteasy.client}</version>
                     <scope>test</scope>
                 </dependency>
                 <dependency>
                     <groupId>org.jboss.resteasy</groupId>
                     <artifactId>resteasy-multipart-provider</artifactId>
+                    <!--suppress MavenModelInspection -->
                     <version>${version.org.jboss.resteasy.client}</version>
                     <scope>test</scope>
                 </dependency>

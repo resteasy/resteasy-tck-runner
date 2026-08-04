@@ -39,9 +39,9 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>com.googlecode.maven-download-plugin</groupId>
+                <groupId>io.github.download-maven-plugin</groupId>
                 <artifactId>download-maven-plugin</artifactId>
-                <version>1.13.0</version>
+                <version>${version.download-maven-plugin}</version>
                 <executions>
                     <execution>
                         <id>download-tck</id>
