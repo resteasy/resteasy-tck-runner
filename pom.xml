@@ -8,9 +8,9 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <groupId>dev.resteasy.tools</groupId>
-        <artifactId>resteasy-parent</artifactId>
-        <version>2.0.4.Final</version>
+        <groupId>org.jboss</groupId>
+        <artifactId>jboss-parent</artifactId>
+        <version>53</version>
         <relativePath/>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -21,11 +21,15 @@
     <packaging>pom</packaging>
 
     <properties>
+        <!-- Do not require a minimum of Java 25 -->
+        <jdk.min.version>11</jdk.min.version>
+
         <!-- Dependency versions -->
-        <version.jakarta.ws.rs.tck>3.1.4</version.jakarta.ws.rs.tck>
+        <version.jakarta.ws.rs.tck>3.1.5</version.jakarta.ws.rs.tck>
 
         <!-- Plugin versions -->
-        <version.org.wildfly.plugin>5.1.5.Final</version.org.wildfly.plugin>
+        <version.download-maven-plugin>2.1.0</version.download-maven-plugin>
+        <version.wildfly-maven-plugin>5.1.5.Final</version.wildfly-maven-plugin>
 
         <maven.repo.local>${settings.localRepository}</maven.repo.local>
     </properties>
@@ -39,10 +43,15 @@
 
     <developers>
         <developer>
-            <id>resteasy.dev</id>
-            <name>RESTEasy</name>
-            <organization>Red Hat, Inc.</organization>
-            <organizationUrl>https://resteasy.dev</organizationUrl>
+            <id>jamezp</id>
+            <name>James Perkins</name>
+            <email>jperkins@ibm.com</email>
+            <url>https://resteasy.dev</url>
+            <organization>IBM</organization>
+            <roles>
+                <role>project-lead</role>
+            </roles>
+            <timezone>-8</timezone>
         </developer>
     </developers>
 

@@ -33,7 +33,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        java: ['17', '21']
+        java: ['17', '21', '25']
 
     steps:
       - uses: actions/checkout@v7
@@ -45,17 +45,16 @@ jobs:
           cache: 'maven'
       - name: Build with Java ${{ matrix.java }}
         run:  |
-          mvn -ntp clean install -U -B -fae
-      - uses: actions/upload-artifact@v7
+          ./mvnw -ntp clean install -U -B -fae
+      - name: Upload test logs for failed run
+        uses: actions/upload-artifact@v7
         if: failure()
         with:
-          name: surefire-reports-${{ matrix.java }}
-          path: '**/failsafe-reports/'
-      - uses: actions/upload-artifact@v7
-        if: failure()
-        with:
-          name: server-logs-${{ matrix.java }}
-          path: '**/server.log'
+          name: failure-reports
+          path: |
+            **/surefire-reports/**
+            **/failsafe-reports/**
+            **/*.log
   build-jdk11:
 
     runs-on: ubuntu-latest
@@ -72,14 +71,13 @@ jobs:
       - name: Jakarta REST 3.1 JDK-11
         # Wildfly 34 is the last version to support Java 11
         run:  |
-          mvn -ntp clean install -U -B -fae -Dversion.org.wildfly=34.0.1.Final -Dwildfly.channel.manifest.artifactId=wildfly-ee -Dserver.test.feature.pack.artifactId=wildfly-ee-galleon-pack
-      - uses: actions/upload-artifact@v7
+          ./mvnw -ntp clean install -U -B -fae -Dversion.org.wildfly=34.0.1.Final -Dwildfly.channel.manifest.artifactId=wildfly-ee -Dserver.test.feature.pack.artifactId=wildfly-ee-galleon-pack
+      - name: Upload test logs for failed run
+        uses: actions/upload-artifact@v7
         if: failure()
         with:
-          name: surefire-reports-11
-          path: '**/failsafe-reports/'
-      - uses: actions/upload-artifact@v7
-        if: failure()
-        with:
-          name: server-logs-11
-          path: '**/server.log'
+          name: failure-reports
+          path: |
+            **/surefire-reports/**
+            **/failsafe-reports/**
+            **/*.log
