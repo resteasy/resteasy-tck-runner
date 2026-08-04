@@ -29,7 +29,7 @@
 
         <!-- Plugin versions -->
         <version.download-maven-plugin>2.1.0</version.download-maven-plugin>
-        <version.wildfly-maven-plugin>5.1.5.Final</version.wildfly-maven-plugin>
+        <version.wildfly-maven-plugin>6.0.1.Final</version.wildfly-maven-plugin>
 
         <maven.repo.local>${settings.localRepository}</maven.repo.local>
     </properties>
