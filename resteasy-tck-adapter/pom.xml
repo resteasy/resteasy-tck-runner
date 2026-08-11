@@ -33,7 +33,7 @@
         <!-- Temporary workaround until a new version of RESTEasy is released -->
         <version.org.jboss.weld>6.0.4.Final</version.org.jboss.weld>
         <version.org.jboss.weld.api>6.0.Final</version.org.jboss.weld.api>
-        <version.org.junit>6.1.2</version.org.junit>
+        <version.org.junit>6.1.3</version.org.junit>
         <version.org.wildfly/>
         <version.org.wildfly.arquillian>5.1.0.Final</version.org.wildfly.arquillian>
 
