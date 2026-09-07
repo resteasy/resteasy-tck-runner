@@ -29,7 +29,7 @@
         <version.org.hamcrest>[2.2, 2.3-A00)</version.org.hamcrest>
         <version.org.jboss.arquillian>1.10.2.Final</version.org.jboss.arquillian>
         <version.org.jboss.logmanager>3.2.2.Final</version.org.jboss.logmanager>
-        <version.org.jboss.resteasy>7.0.3.Final</version.org.jboss.resteasy>
+        <version.org.jboss.resteasy>7.0.4.Final</version.org.jboss.resteasy>
         <!-- Temporary workaround until a new version of RESTEasy is released -->
         <version.org.jboss.weld>6.0.4.Final</version.org.jboss.weld>
         <version.org.jboss.weld.api>6.0.Final</version.org.jboss.weld.api>
