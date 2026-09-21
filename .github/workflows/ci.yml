@@ -6,7 +6,7 @@ name: RESTEasy Jakarta REST 4.0 TCK
 on:
   push:
     branches:
-      - 'main'
+      - 'jakarta-rest-4.0'
     paths:
       - '.github/workflows/ci.yml'
       - '**/pom.xml'
