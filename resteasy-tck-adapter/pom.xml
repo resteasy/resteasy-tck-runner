@@ -10,7 +10,7 @@
     <parent>
         <groupId>dev.resteasy.tck</groupId>
         <artifactId>resteasy-tck-runner-parent</artifactId>
-        <version>4.0.0-SNAPSHOT</version>
+        <version>5.0.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -42,10 +42,10 @@
         <galleon.log.time>true</galleon.log.time>
 
         <server.test.feature.pack.groupId>org.wildfly</server.test.feature.pack.groupId>
-        <server.test.feature.pack.artifactId>wildfly-ee-galleon-pack</server.test.feature.pack.artifactId>
+        <server.test.feature.pack.artifactId>wildfly-preview-feature-pack</server.test.feature.pack.artifactId>
 
         <wildfly.channel.manifest.groupId>org.wildfly.channels</wildfly.channel.manifest.groupId>
-        <wildfly.channel.manifest.artifactId>wildfly-ee</wildfly.channel.manifest.artifactId>
+        <wildfly.channel.manifest.artifactId>wildfly-preview</wildfly.channel.manifest.artifactId>
 
         <resteasy.channel.manifest.groupId>org.jboss.resteasy.channels</resteasy.channel.manifest.groupId>
         <resteasy.channel.manifest.artifactId>resteasy-7.0</resteasy.channel.manifest.artifactId>
