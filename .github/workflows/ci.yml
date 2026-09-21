@@ -51,7 +51,7 @@ jobs:
         uses: actions/upload-artifact@v7
         if: failure()
         with:
-          name: failure-reports
+          name: failure-reports-${{ matrix.java }}
           path: |
             **/surefire-reports/**
             **/failsafe-reports/**
