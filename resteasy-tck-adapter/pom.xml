@@ -25,11 +25,11 @@
         <version.commons-httpclient>3.1</version.commons-httpclient>
         <version.io.smallrye>3.6.0</version.io.smallrye>
         <version.jakarta.tck>2.7</version.jakarta.tck>
-        <version.jakarta.ws.rs>4.0.0</version.jakarta.ws.rs>
+        <version.jakarta.ws.rs>5.0.0-M1</version.jakarta.ws.rs>
         <version.org.hamcrest>[2.2, 2.3-A00)</version.org.hamcrest>
         <version.org.jboss.arquillian>1.10.2.Final</version.org.jboss.arquillian>
         <version.org.jboss.logmanager>3.2.2.Final</version.org.jboss.logmanager>
-        <version.org.jboss.resteasy>7.0.5.Final</version.org.jboss.resteasy>
+        <version.org.jboss.resteasy>8.0.0.Alpha1-SNAPSHOT</version.org.jboss.resteasy>
         <!-- Temporary workaround until a new version of RESTEasy is released -->
         <version.org.jboss.weld>6.0.4.Final</version.org.jboss.weld>
         <version.org.jboss.weld.api>6.0.Final</version.org.jboss.weld.api>
@@ -48,7 +48,7 @@
         <wildfly.channel.manifest.artifactId>wildfly-preview</wildfly.channel.manifest.artifactId>
 
         <resteasy.channel.manifest.groupId>org.jboss.resteasy.channels</resteasy.channel.manifest.groupId>
-        <resteasy.channel.manifest.artifactId>resteasy-7.0</resteasy.channel.manifest.artifactId>
+        <resteasy.channel.manifest.artifactId>resteasy-8.0</resteasy.channel.manifest.artifactId>
 
         <!-- TCK Settings -->
         <tck.log.debug>false</tck.log.debug>
@@ -324,8 +324,7 @@
                                 <!-- Signature test class path setup -->
                                 <fileset id="sigtest-libs" dir="${jboss.home}${file.separator}modules/system/layers/base/jakarta/">
                                     <include name="**/ws/rs/api/main/jakarta.ws.rs-api*.jar"/>
-                                    <include name="**/jakarta.enterprise.cdi-api*.jar"/>
-                                    <include name="**/jakarta.enterprise.lang-model*.jar"/>
+                                    <include name="**/enterprise/api/main/*.jar"/>
                                     <include name="**/jakarta.inject-api*.jar"/>
                                 </fileset>
                                 <pathconvert pathsep="${path.separator}"
@@ -414,12 +413,33 @@
                 </executions>
             </plugin>
             <plugin>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <!-- Extract what is needed for the SeBootstrap testing -->
+                    <execution>
+                        <id>unpack-se-bootstrap-tests</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>jakarta.ws.rs</groupId>
+                                    <artifactId>jakarta-restful-ws-tck</artifactId>
+                                </artifactItem>
+                            </artifactItems>
+                            <includes>ee/jakarta/tck/ws/rs/sebootstrap/**,ee/jakarta/tck/ws/rs/common/util/**</includes>
+                            <outputDirectory>${project.build.directory}/se-bootstrap-tests</outputDirectory>
+                        </configuration>
+                    </execution>
+
+                </executions>
+            </plugin>
+            <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <configuration>
                     <redirectTestOutputToFile>${maven.test.redirectTestOutputToFile}</redirectTestOutputToFile>
-                    <dependenciesToScan>
-                        <dependency>jakarta.ws.rs:jakarta-restful-ws-tck</dependency>
-                    </dependenciesToScan>
                     <systemPropertyVariables>
                         <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
                         <jboss.home>${jboss.home}</jboss.home>
@@ -447,6 +467,32 @@
                             <goal>integration-test</goal>
                             <goal>verify</goal>
                         </goals>
+                        <configuration>
+                            <dependenciesToScan>
+                                <dependency>jakarta.ws.rs:jakarta-restful-ws-tck</dependency>
+                            </dependenciesToScan>
+                            <excludedGroups>se_bootstrap</excludedGroups>
+                            <excludes>
+                                <!-- This test is being deleted in an upstream PR as it is not correct -->
+                                <exclude>ee.jakarta.tck.ws.rs.spec.client.inject.ClientInjectionIT</exclude>
+                            </excludes>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>se-bootstrap</id>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                        <configuration>
+                            <testClassesDirectory>${project.build.directory}/se-bootstrap-tests</testClassesDirectory>
+                            <classpathDependencyExcludes>
+                                <exclude>jakarta.ws.rs:jakarta-restful-ws-tck</exclude>
+                            </classpathDependencyExcludes>
+                            <groups>se_bootstrap</groups>
+                            <failIfNoSpecifiedTests>false</failIfNoSpecifiedTests>
+                            <summaryFile>${project.build.directory}/failsafe-reports/failsafe-summary-se-bootstrap.xml</summaryFile>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>

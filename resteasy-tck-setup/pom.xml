@@ -19,8 +19,8 @@
         Downloads the Jakarta RESTful Web Services TCK and installs the TCK artifacts into the local repository.
     </description>
     <properties>
-        <tck.url>https://download.eclipse.org/jakartaee/restful-ws/4.0/jakarta-restful-ws-tck-${version.jakarta.ws.rs.tck}.zip</tck.url>
-        <tck.sha256>b6290c1b5b3d2fdd9cc700a999243492a7e27b94a9b6af1974ff4dc5bfbf98f2</tck.sha256>
+        <tck.url>https://download.eclipse.org/ee4j/restful-ws/tck/eftl/jakarta-restful-ws-tck-${version.jakarta.ws.rs.tck}.zip</tck.url>
+        <tck.sha256>91c56fdd555e19e4be7da60efef171c93447a84b1921becde31a382754dd6667</tck.sha256>
         <tck.artifact.prefix>jakarta-restful-ws-tck-${version.jakarta.ws.rs.tck}</tck.artifact.prefix>
         <tck.download.directory>${project.build.directory}/jakarta-rest-tck</tck.download.directory>
         <tck.artifact.directory>${project.build.directory}/jakarta-rest-tck/restful-ws-tck/artifacts</tck.artifact.directory>

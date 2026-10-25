@@ -34,16 +34,26 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        java: ['17', '21', '25']
+        java: ['21', '25', '27']
 
     steps:
       - uses: actions/checkout@v7
+        # Currently we must check out and build RESTEasy until we no longer require a SNAPSHOT
+      - uses: actions/checkout@v7
+        name: 'Checkout RESTEasy'
+        with:
+          path: 'resteasy'
+          repository: 'resteasy/resteasy'
       - name: Set up JDK ${{ matrix.java }}
         uses: actions/setup-java@v6
         with:
           java-version: ${{ matrix.java }}
           distribution: 'temurin'
           cache: 'maven'
+      - name: Build RESTEasy
+        run: |
+          cd resteasy
+          ./mvnw clean install -DskipTests
       - name: Jakarta REST 5.0 JDK-${{ matrix.java }}
         run:  |
           ./mvnw -ntp clean install -U -B -fae

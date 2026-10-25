@@ -25,7 +25,7 @@
         <jdk.min.version>17</jdk.min.version>
 
         <!-- Dependency versions -->
-        <version.jakarta.ws.rs.tck>4.0.1</version.jakarta.ws.rs.tck>
+        <version.jakarta.ws.rs.tck>5.0.0-M1</version.jakarta.ws.rs.tck>
 
         <!-- Plugin versions -->
         <version.download-maven-plugin>2.1.0</version.download-maven-plugin>
@@ -59,5 +59,23 @@
         <module>resteasy-tck-setup</module>
         <module>resteasy-tck-adapter</module>
     </modules>
+
+    <profiles>
+        <profile>
+            <id>jakarta-staging</id>
+            <repositories>
+                <repository>
+                    <id>jakarta-rest-staging</id>
+                    <url>https://repo.eclipse.org/repository/rest-maven2-staging/</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </repository>
+            </repositories>
+        </profile>
+    </profiles>
 
 </project>
