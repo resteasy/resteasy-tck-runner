@@ -28,7 +28,7 @@
         <version.jakarta.ws.rs.tck>3.1.5</version.jakarta.ws.rs.tck>
 
         <!-- Plugin versions -->
-        <version.download-maven-plugin>2.1.0</version.download-maven-plugin>
+        <version.download-maven-plugin>2.2.0</version.download-maven-plugin>
         <version.wildfly-maven-plugin>5.1.5.Final</version.wildfly-maven-plugin>
 
         <maven.repo.local>${settings.localRepository}</maven.repo.local>
