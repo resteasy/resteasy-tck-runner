@@ -1,0 +1,6 @@
+#
+# Copyright The RESTEasy Authors
+# SPDX-License-Identifier: Apache-2.0
+#
+# RESTEasy specific way to ensure the client uses the feature
+dev.resteasy.tck.TckFeature
