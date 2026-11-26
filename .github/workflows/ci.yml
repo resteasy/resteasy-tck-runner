@@ -26,42 +26,38 @@ concurrency:
   group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
   cancel-in-progress: true
 
+env:
+  MVN_ARGS: '-V -B -fae'
+
 jobs:
   build:
 
     runs-on: ubuntu-latest
     timeout-minutes: 90
-    strategy:
-      fail-fast: false
-      matrix:
-        java: ['21', '25', '27']
 
     steps:
       - uses: actions/checkout@v7
-        # Currently we must check out and build RESTEasy until we no longer require a SNAPSHOT
-      - uses: actions/checkout@v7
-        name: 'Checkout RESTEasy'
-        with:
-          path: 'resteasy'
-          repository: 'resteasy/resteasy'
-      - name: Set up JDK ${{ matrix.java }}
+      - name: Set up JDKs
         uses: actions/setup-java@v6
         with:
-          java-version: ${{ matrix.java }}
           distribution: 'temurin'
           cache: 'maven'
-      - name: Build RESTEasy
-        run: |
-          cd resteasy
-          ./mvnw clean install -DskipTests
-      - name: Jakarta REST 5.0 JDK-${{ matrix.java }}
-        run:  |
-          ./mvnw -ntp clean install -U -B -fae
+          # Please note the order here of having 25 last as that is the version we want to compile with
+          java-version: |
+            21
+            27
+            25
+      - name: Build and Test on Java 25
+        run: ./mvnw ${{ env.MVN_ARGS }} clean install
+      - name: Build and Test on Java 27
+        run: ./mvnw ${{ env.MVN_ARGS }} verify '-Dtest.java.home=${{env.JAVA_HOME_27_X64}}${{env.JAVA_HOME_27_ARM64}}' '-Dtest.report.dir=java27'
+      - name: Build and Test on Java 21
+        run: ./mvnw ${{ env.MVN_ARGS }} verify '-Dtest.java.home=${{env.JAVA_HOME_21_X64}}${{env.JAVA_HOME_21_ARM64}}' '-Dtest.report.dir=java21'
       - name: Upload test logs for failed run
         uses: actions/upload-artifact@v7
         if: failure()
         with:
-          name: failure-reports-${{ matrix.java }}
+          name: failure-reports
           path: |
             **/surefire-reports/**
             **/failsafe-reports/**
