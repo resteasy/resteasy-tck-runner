@@ -96,6 +96,12 @@
         <!-- Test Dependencies -->
         <dependency>
             <groupId>jakarta.ws.rs</groupId>
+            <artifactId>jakarta.ws.rs-api</artifactId>
+            <version>${version.jakarta.ws.rs}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.ws.rs</groupId>
             <artifactId>jakarta-restful-ws-tck</artifactId>
             <version>${version.jakarta.ws.rs.tck}</version>
             <scope>test</scope>
@@ -553,12 +559,6 @@
                 </property>
             </activation>
             <dependencies>
-                <dependency>
-                    <groupId>jakarta.ws.rs</groupId>
-                    <artifactId>jakarta.ws.rs-api</artifactId>
-                    <version>${version.jakarta.ws.rs}</version>
-                    <scope>test</scope>
-                </dependency>
                 <!-- RESTEasy required dependencies -->
                 <dependency>
                     <groupId>org.jboss.resteasy</groupId>
